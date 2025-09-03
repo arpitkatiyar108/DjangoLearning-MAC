@@ -1,0 +1,73 @@
+# =========================
+# Django & Python
+# =========================
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.so
+
+# Local environment
+.env
+.env.*
+*.env
+venv/
+venv*/
+ENV/
+env.bak/
+env/
+
+# Django migrations (only ignore empty init files if needed)
+*/migrations/__pycache__/
+*/migrations/*.pyc
+*/migrations/*.pyo
+*/migrations/*.pyd
+
+# Uncomment the next line if you want to ignore migrations entirely
+# */migrations/
+
+# SQLite database
+db.sqlite3
+db.sqlite3-journal
+
+# Media and static files
+media/
+staticfiles/
+static/
+assets/
+
+# =========================
+# PyCharm
+# =========================
+.idea/
+*.iml
+
+# PyCharm specific caches
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/**/usage.statistics.xml
+.idea/**/dictionaries
+.idea/**/shelf
+
+# =========================
+# Logs
+# =========================
+*.log
+logs/
+log/
+
+# =========================
+# OS Specific
+# =========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.Trash-*
