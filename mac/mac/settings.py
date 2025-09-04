@@ -30,8 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # add your apps (either 'shop' or 'shop.apps.ShopConfig' works)
-    'shop',
-    'blog',
+    'shop.apps.ShopConfig',
+    'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
