@@ -1,8 +1,10 @@
 from django.http import HttpResponse
+from django.shortcuts import render
+
 
 # Homepage
 def home(request):
-    return HttpResponse("Welcome to My Awesome Cart - Home Page")
+    return render(request, 'shop\home.html')
 
 # About Us Page
 def about(request):
