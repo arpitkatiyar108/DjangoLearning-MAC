@@ -1,166 +1,58 @@
 {% extends 'shop/basic.html' %}
+
 {% block title %}Home Page{% endblock %}
+
 {% block body %}
-{% load static %}
-      <div class="container my-4">
-      <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
-  <div class="carousel-inner">
+<div class="container my-4">
+    <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for product in products %}
+                {% if forloop.counter0|divisibleby:4 %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="container">
+                            <div class="row">
+                {% endif %}
 
-    <!-- Slide 1 -->
-    <div class="carousel-item active">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 1">
-              <div class="card-body">
-                <h5 class="card-title">Card 1</h5>
-                <p class="card-text">Some example text for card 1.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 2">
-              <div class="card-body">
-                <h5 class="card-title">Card 2</h5>
-                <p class="card-text">Some example text for card 2.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 3">
-              <div class="card-body">
-                <h5 class="card-title">Card 3</h5>
-                <p class="card-text">Some example text for card 3.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 4">
-              <div class="card-body">
-                <h5 class="card-title">Card 4</h5>
-                <p class="card-text">Some example text for card 4.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
+                <!-- Product Card -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="Card {{forloop.counter}}: {{ product.product_name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.product_name }}</h5>
+                            <p class="card-text">{{ product.description }}</p>
+                            <a href="#" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                {% if forloop.counter|divisibleby:4 or forloop.last %}
+                            </div> <!-- End row -->
+                        </div> <!-- End container -->
+                    </div> <!-- End carousel-item -->
+                {% endif %}
+            {% endfor %}
         </div>
-      </div>
     </div>
-
-    <!-- Slide 2 -->
-    <div class="carousel-item">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 5">
-              <div class="card-body">
-                <h5 class="card-title">Card 5</h5>
-                <p class="card-text">Some example text for card 5.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 6">
-              <div class="card-body">
-                <h5 class="card-title">Card 6</h5>
-                <p class="card-text">Some example text for card 6.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 7">
-              <div class="card-body">
-                <h5 class="card-title">Card 7</h5>
-                <p class="card-text">Some example text for card 7.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 8">
-              <div class="card-body">
-                <h5 class="card-title">Card 8</h5>
-                <p class="card-text">Some example text for card 8.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Slide 3 -->
-    <div class="carousel-item">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 9">
-              <div class="card-body">
-                <h5 class="card-title">Card 9</h5>
-                <p class="card-text">Some example text for card 9.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 10">
-              <div class="card-body">
-                <h5 class="card-title">Card 10</h5>
-                <p class="card-text">Some example text for card 10.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 11">
-              <div class="card-body">
-                <h5 class="card-title">Card 11</h5>
-                <p class="card-text">Some example text for card 11.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img src="{% static 'shop/images/CopperBottle.jpg' %}" class="card-img-top" alt="Card 12">
-              <div class="card-body">
-                <h5 class="card-title">Card 12</h5>
-                <p class="card-text">Some example text for card 12.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Carousel Controls -->
-  <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
-    <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
 </div>
-</div>
+
+<!-- Carousel Controls -->
+<button
+  class="carousel-control-prev"
+  type="button"
+  data-bs-target="#cardCarousel"
+  data-bs-slide="prev"
+  style="background-color: rgba(0,0,0,.25); border-radius: 50%; width: 4vw; height: 4vw; top: 50%; transform: translateY(-50%); position: absolute;">
+  <span class="carousel-control-prev-icon" style="filter: invert(1);" aria-hidden="true"></span>
+  <span class="visually-hidden">Previous</span>
+</button>
+
+<button
+  class="carousel-control-next"
+  type="button"
+  data-bs-target="#cardCarousel"
+  data-bs-slide="next"
+  style="background-color: rgba(0,0,0,.25); border-radius: 50%; width: 4vw; height: 4vw; top: 50%; transform: translateY(-50%); position: absolute;">
+  <span class="carousel-control-next-icon" style="filter: invert(1);" aria-hidden="true"></span>
+  <span class="visually-hidden">Next</span>
+</button>
 {% endblock %}
