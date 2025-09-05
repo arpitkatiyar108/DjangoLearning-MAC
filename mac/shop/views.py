@@ -8,7 +8,7 @@ def home(request):
 
 # About Us Page
 def about(request):
-    return HttpResponse("About Us - My Awesome Cart")
+    return render(request, 'shop\\about.html')
 
 # Contact Page
 def contact(request):
