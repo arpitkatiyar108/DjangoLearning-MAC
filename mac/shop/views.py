@@ -6,14 +6,8 @@ from math import ceil
 # Homepage
 def home(request):
     products = Product.objects.all()
-    n = len(products)
-    nSlides = n // 4 + ceil((n / 4) - (n // 4))
     params = {
-        'products' : products,
-        'no_of_slides' : nSlides,
-        'range' : range(1, nSlides+1),
-        'no_of_purducts': n,
-        'no_of_products_per_slide' :  range(1, 4),
+        'products' : products
     }
     return render(request, 'shop\home.html', params)
 
