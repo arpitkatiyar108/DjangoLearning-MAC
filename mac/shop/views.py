@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models import Product
@@ -6,8 +8,18 @@ from math import ceil
 # Homepage
 def home(request):
     products = Product.objects.all()
+    categories = Product.objects.values_list('category', flat=True).distinct()
+
+    products_and_categories = []
+    for category in categories:
+        products_and_categories.append({
+            'category': category,
+            'products': products.filter(category=category).order_by('-price'),
+        })
+
     params = {
-        'products' : products
+        'products' : products,
+        'products_and_categories' : products_and_categories
     }
     return render(request, 'shop\home.html', params)
 

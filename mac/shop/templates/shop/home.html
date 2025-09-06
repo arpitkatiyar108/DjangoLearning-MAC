@@ -118,10 +118,11 @@
 {% endblock %}
 {% block body %}
 <div class="container my-4">
+    {% for product_and_category in products_and_categories %}
     <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
-        <h2 class="text-center my-3">Patanjali - Essentials</h2>
+        <h2 class="text-center my-3">Patanjali - {{product_and_category.category|title}}</h2>
         <div class="carousel-inner">
-            {% for product in products %}
+            {% for product in product_and_category.products %}
                 {% if forloop.counter0|divisibleby:4 %}
                     <div class="carousel-item {% if forloop.first %}active{% endif %}">
                         <div class="container">
@@ -175,63 +176,7 @@
           <span class="visually-hidden">Next</span>
         </button>
     </div>
-    <div id="cardCarousel" class="carousel slide my-5" data-bs-ride="carousel">
-        <h2 class="text-center my-3">Patanjali - Natural Health Care</h2>
-        <div class="carousel-inner">
-            {% for product in products %}
-                {% if forloop.counter0|divisibleby:4 %}
-                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                        <div class="container">
-                            <div class="row g-3">
-                {% endif %}
-
-                <!-- Product Card -->
-                <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <!-- Fixed size image -->
-                        <div class="card-img-container">
-                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}">
-                        </div>
-
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title text-truncate">{{ product.product_name }}</h5>
-                            <!-- Truncated description -->
-                            <p class="card-text text-truncate-3">
-                                {{ product.description }}
-                            </p>
-                            <div class="mt-auto">
-                                <a href="#" class="btn btn-primary w-100">View Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {% if forloop.counter|divisibleby:4 or forloop.last %}
-                            </div> <!-- End row -->
-                        </div> <!-- End container -->
-                    </div> <!-- End carousel-item -->
-                {% endif %}
-            {% endfor %}
-        </div>
-        <!-- Clean buttons: no inline styles anymore -->
-        <button
-          class="carousel-control-prev"
-          type="button"
-          data-bs-target="#cardCarousel"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-
-        <button
-          class="carousel-control-next"
-          type="button"
-          data-bs-target="#cardCarousel"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-    </div>
+    {% endfor %}
 </div>
 
 {% endblock %}
