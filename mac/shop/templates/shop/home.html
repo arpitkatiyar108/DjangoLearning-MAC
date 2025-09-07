@@ -186,7 +186,7 @@
 <script>
     let cart = JSON.parse(localStorage.getItem('cart')) || {};
     const updateCartCount = () => {
-        const totalItems = Object.values(cart).reduce((sum,qty) => sum + qty ,0);
+        const totalItems = Object.keys(cart).length;
         document.getElementById('cart-count').textContent = totalItems;
     }
     updateCartCount();
@@ -197,15 +197,33 @@
     }
     const updateCart = () => {
         const container = document.getElementById('cart-items');
-        container.innerHTML = '';
-        container.innerHTML += '<ul>';
+        let content = '<ul class="list-group list-group-flush">';
 
-        for(const[productName, productQuantity] of Object.entries(cart)) {
-            container.innerHTML += `<li>${productName} : ${productQuantity}</li>`
+        for (const [productName, productQuantity] of Object.entries(cart)) {
+            content += `<li class="list-group-item">${productName} : ${productQuantity}</li>`;
         }
 
-        container.innerHTML += `</ul>`;
-    }
+        content += '</ul>';
+
+
+        // Get existing popover instance
+        let popoverInstance = bootstrap.Popover.getInstance(container);
+
+        if (popoverInstance) {
+            // If it exists, just update the body dynamically
+            popoverInstance.setContent({ '.popover-body': content });
+        } else {
+            // If not, create a new popover
+            popoverInstance = new bootstrap.Popover(container, {
+                html: true,       // legacy support
+                allowHtml: true,  // ✅ REQUIRED for Bootstrap 5.3+
+                sanitize: false,  // ✅ Disable sanitization to allow raw HTML
+                content: content, // explicitly set initial content
+                title: 'Cart Items'
+            });
+        }
+    };
+    updateCart();
     document.addEventListener('click', (e) => {
         if(e.target.classList.contains('add-to-cart')) {
             const productName = e.target.dataset.productName;

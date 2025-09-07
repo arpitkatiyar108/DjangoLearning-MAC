@@ -29,20 +29,20 @@ def about(request):
 
 # Contact Page
 def contact(request):
-    return HttpResponse("Contact Us - My Awesome Cart")
+    return render(request, 'shop\contact.html')
 
 # Order Tracker Page
 def order_tracker(request):
-    return HttpResponse("Track Your Order")
+    return render(request, 'shop\\tracker.html')
 
 # Search Products Page
 def search_products(request):
-    return HttpResponse("Search Products Page")
+    return render(request, 'shop\search.html')
 
 # Product Detail Page
 def product_detail(request, id):
-    return HttpResponse(f"Product Detail Page for Product ID: {id}")
+    return render(request, 'shop\product_view.html')
 
 # Checkout Page
 def checkout(request):
-    return HttpResponse("Checkout Page")
+    return render(request, 'shop\checkout.html')
