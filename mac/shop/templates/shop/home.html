@@ -36,7 +36,7 @@
     max-height: 4.5em; /* Approx height for 3 lines */
 }
 /* ---------- Carousel control variables & container ---------- */
-#cardCarousel {
+.cb {
   position: relative;        /* ensure absolute children are positioned to this container */
   overflow: visible;        /* allow controls to sit outside inner clipped areas if needed */
   --cc-size: clamp(40px, 4vw, 56px);    /* control diameter: responsive but bounded */
@@ -47,8 +47,8 @@
 }
 
 /* ---------- Base style for circular control buttons ---------- */
-#cardCarousel .carousel-control-prev,
-#cardCarousel .carousel-control-next {
+.cb .carousel-control-prev,
+.cb .carousel-control-next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -68,25 +68,25 @@
 }
 
 /* left/right placement (spacing from edges) */
-#cardCarousel .carousel-control-prev { left: 0.5rem; }
-#cardCarousel .carousel-control-next { right: 0.5rem; }
+.cb .carousel-control-prev { left: 0.5rem; }
+.cb .carousel-control-next { right: 0.5rem; }
 
 /* Wider spacing on large screens */
 @media (min-width: 992px) {
-  #cardCarousel .carousel-control-prev { left: 1rem; }
-  #cardCarousel .carousel-control-next { right: 1rem; }
+  .cb .carousel-control-prev { left: 1rem; }
+  .cb .carousel-control-next { right: 1rem; }
 }
 
 /* ---------- Hover, active and focus states (accessibility) ---------- */
-#cardCarousel .carousel-control-prev:hover,
-#cardCarousel .carousel-control-next:hover {
+.cb .carousel-control-prev:hover,
+.cb .carousel-control-next:hover {
   background-color: var(--cc-bg-hover);
   transform: translateY(-50%) scale(1.03);
 }
 
 /* keyboard focus ring (visible for a11y) */
-#cardCarousel .carousel-control-prev:focus,
-#cardCarousel .carousel-control-next:focus {
+.cb .carousel-control-prev:focus,
+.cb .carousel-control-next:focus {
   outline: none;
   box-shadow: 0 0 0 4px rgba(13,110,253,0.18); /* subtle blue ring */
   background-color: var(--cc-bg-hover);
@@ -94,8 +94,8 @@
 
 /* ---------- Icon sizing & color handling ---------- */
 /* Keep the default bootstrap background-icon but size and color it via filter */
-#cardCarousel .carousel-control-prev-icon,
-#cardCarousel .carousel-control-next-icon {
+.cb .carousel-control-prev-icon,
+.cb .carousel-control-next-icon {
   width: var(--cc-icon-size);
   height: var(--cc-icon-size);
   background-size: 100% 100% !important;
@@ -108,18 +108,20 @@
 
 /* Make touch targets a little bigger on small screens */
 @media (max-width: 576px) {
-  #cardCarousel {
+  .cb {
     --cc-size: 48px;
   }
-  #cardCarousel .carousel-control-prev { left: 0.25rem; }
-  #cardCarousel .carousel-control-next { right: 0.25rem; }
+  .cb .carousel-control-prev { left: 0.25rem; }
+  .cb .carousel-control-next { right: 0.25rem; }
 }
 </style>
 {% endblock %}
 {% block body %}
 <div class="container my-4">
+    <button id="show-cart">Show Cart</button>
+<!--    <h2 id="cart-items">Cart Items.....</h2>-->
     {% for product_and_category in products_and_categories %}
-    <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div id="cardCarousel_{{product_and_category.category|slugify }}" class="carousel slide cb" data-bs-ride="carousel">
         <h2 class="text-center my-3">Patanjali - {{product_and_category.category|title}}</h2>
         <div class="carousel-inner">
             {% for product in product_and_category.products %}
@@ -144,7 +146,7 @@
                                 {{ product.description }}
                             </p>
                             <div class="mt-auto">
-                                <a href="#" class="btn btn-primary w-100">View Details</a>
+                                <button class="btn btn-primary w-100 add-to-cart" data-product-name="{{product.product_name}}" >Add to Cart</button>
                             </div>
                         </div>
                     </div>
@@ -159,18 +161,18 @@
         </div>
         <!-- Clean buttons: no inline styles anymore -->
         <button
-          class="carousel-control-prev"
+          class="carousel-control-prev cb"
           type="button"
-          data-bs-target="#cardCarousel"
+          data-bs-target="#cardCarousel_{{product_and_category.category|slugify }}"
           data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
 
         <button
-          class="carousel-control-next"
+          class="carousel-control-next cb"
           type="button"
-          data-bs-target="#cardCarousel"
+          data-bs-target="#cardCarousel_{{product_and_category.category|slugify}}"
           data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
@@ -179,4 +181,42 @@
     {% endfor %}
 </div>
 
+{% endblock %}
+{% block js %}
+<script>
+    let cart = JSON.parse(localStorage.getItem('cart')) || {};
+    const updateCartCount = () => {
+        const totalItems = Object.values(cart).reduce((sum,qty) => sum + qty ,0);
+        document.getElementById('cart-count').textContent = totalItems;
+    }
+    updateCartCount();
+    const addToCart = (productName) => {
+        cart[productName] = (cart[productName] || 0) + 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+    }
+    const updateCart = () => {
+        const container = document.getElementById('cart-items');
+        container.innerHTML = '';
+        container.innerHTML += '<ul>';
+
+        for(const[productName, productQuantity] of Object.entries(cart)) {
+            container.innerHTML += `<li>${productName} : ${productQuantity}</li>`
+        }
+
+        container.innerHTML += `</ul>`;
+    }
+    document.addEventListener('click', (e) => {
+        if(e.target.classList.contains('add-to-cart')) {
+            const productName = e.target.dataset.productName;
+            addToCart(productName);
+            updateCart();
+        }
+        if(e.target.id === 'show-cart') {
+            updateCart();
+        }
+    })
+
+
+</script>
 {% endblock %}
