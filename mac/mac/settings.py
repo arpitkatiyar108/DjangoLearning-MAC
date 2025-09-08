@@ -3,6 +3,8 @@ from pathlib import Path
 import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+APPEND_SLASH = True
+
 
 STATIC_URL = '/static/'
 #STATICFILES_DIRS = [BASE_DIR / 'static']  # optional project-level static

@@ -1,128 +1,149 @@
 {% extends 'shop/basic.html' %}
 
-{% block title %}Home Page{% endblock %}
+{% block title %}
+Home Page
+{% endblock %}
+
 {% block style %}
 <style>
-/* 1. Fix image size and maintain aspect ratio */
-.card-img-container {
-    height: 200px; /* Fixed height */
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #f8f9fa;
-}
+    /* ---------- Product Card Styling ---------- */
+    /* 1. Fix image size and maintain aspect ratio */
+    .card-img-container {
+        height: 200px; /* Fixed height */
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f8f9fa;
+    }
 
-.card-img-container img {
-    height: 100%;
-    width: auto;
-    object-fit: cover;
-}
+    .card-img-container img {
+        height: 100%;
+        width: auto;
+        object-fit: cover;
+    }
 
-/* 2. Ensure consistent card heights */
-.card {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+    /* 2. Ensure consistent card heights */
+    .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
 
-/* 3. Truncate text to avoid overflow */
-.text-truncate-3 {
-    display: -webkit-box;
-    -webkit-line-clamp: 3; /* Show only 3 lines */
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-height: 4.5em; /* Approx height for 3 lines */
-}
-/* ---------- Carousel control variables & container ---------- */
-.cb {
-  position: relative;        /* ensure absolute children are positioned to this container */
-  overflow: visible;        /* allow controls to sit outside inner clipped areas if needed */
-  --cc-size: clamp(40px, 4vw, 56px);    /* control diameter: responsive but bounded */
-  --cc-bg: rgba(0,0,0,.15);
-  --cc-bg-hover: rgba(0,0,0,.40);
-  --cc-icon-size: calc(var(--cc-size) * 0.48); /* icon is roughly half the circle */
-  z-index: 1;
-}
+    /* 3. Truncate text to avoid overflow */
+    .text-truncate-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* Show only 3 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 4.5em; /* Approx height for 3 lines */
+    }
 
-/* ---------- Base style for circular control buttons ---------- */
-.cb .carousel-control-prev,
-.cb .carousel-control-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: var(--cc-size);
-  height: var(--cc-size);
-  border-radius: 50%;
-  background-color: var(--cc-bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0;
-  border: none; /* remove default button border (Bootstrap may add it) */
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-  transition: background-color .12s ease, transform .08s ease;
-  z-index: 10; /* sit above carousel slides */
-  -webkit-tap-highlight-color: transparent;
-}
+    /* ---------- Carousel Controls Styling ---------- */
+    .cb {
+        position: relative;
+        overflow: visible;
+        --cc-size: clamp(40px, 4vw, 56px);
+        --cc-bg: rgba(0, 0, 0, 0.15);
+        --cc-bg-hover: rgba(0, 0, 0, 0.40);
+        --cc-icon-size: calc(var(--cc-size) * 0.48);
+        z-index: 1;
+    }
 
-/* left/right placement (spacing from edges) */
-.cb .carousel-control-prev { left: 0.5rem; }
-.cb .carousel-control-next { right: 0.5rem; }
+    /* Base style for circular buttons */
+    .cb .carousel-control-prev,
+    .cb .carousel-control-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: var(--cc-size);
+        height: var(--cc-size);
+        border-radius: 50%;
+        background-color: var(--cc-bg);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        border: none;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        transition: background-color 0.12s ease, transform 0.08s ease;
+        z-index: 10;
+        -webkit-tap-highlight-color: transparent;
+    }
 
-/* Wider spacing on large screens */
-@media (min-width: 992px) {
-  .cb .carousel-control-prev { left: 1rem; }
-  .cb .carousel-control-next { right: 1rem; }
-}
+    /* Left/Right positioning */
+    .cb .carousel-control-prev {
+        left: 0.5rem;
+    }
 
-/* ---------- Hover, active and focus states (accessibility) ---------- */
-.cb .carousel-control-prev:hover,
-.cb .carousel-control-next:hover {
-  background-color: var(--cc-bg-hover);
-  transform: translateY(-50%) scale(1.03);
-}
+    .cb .carousel-control-next {
+        right: 0.5rem;
+    }
 
-/* keyboard focus ring (visible for a11y) */
-.cb .carousel-control-prev:focus,
-.cb .carousel-control-next:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(13,110,253,0.18); /* subtle blue ring */
-  background-color: var(--cc-bg-hover);
-}
+    @media (min-width: 992px) {
+        .cb .carousel-control-prev {
+            left: 1rem;
+        }
 
-/* ---------- Icon sizing & color handling ---------- */
-/* Keep the default bootstrap background-icon but size and color it via filter */
-.cb .carousel-control-prev-icon,
-.cb .carousel-control-next-icon {
-  width: var(--cc-icon-size);
-  height: var(--cc-icon-size);
-  background-size: 100% 100% !important;
-  background-position: center;
-  background-repeat: no-repeat;
-  /* If you used inline `filter: invert(1)` before, we moved it here.
-     If icons look inverted, remove the filter. */
-  filter: invert(1);
-}
+        .cb .carousel-control-next {
+            right: 1rem;
+        }
+    }
 
-/* Make touch targets a little bigger on small screens */
-@media (max-width: 576px) {
-  .cb {
-    --cc-size: 48px;
-  }
-  .cb .carousel-control-prev { left: 0.25rem; }
-  .cb .carousel-control-next { right: 0.25rem; }
-}
+    /* Hover states */
+    .cb .carousel-control-prev:hover,
+    .cb .carousel-control-next:hover {
+        background-color: var(--cc-bg-hover);
+        transform: translateY(-50%) scale(1.03);
+    }
+
+    /* Focus accessibility */
+    .cb .carousel-control-prev:focus,
+    .cb .carousel-control-next:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.18);
+        background-color: var(--cc-bg-hover);
+    }
+
+    /* Icon styling */
+    .cb .carousel-control-prev-icon,
+    .cb .carousel-control-next-icon {
+        width: var(--cc-icon-size);
+        height: var(--cc-icon-size);
+        background-size: 100% 100% !important;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: invert(1);
+    }
+
+    /* Touch targets on small screens */
+    @media (max-width: 576px) {
+        .cb {
+            --cc-size: 48px;
+        }
+
+        .cb .carousel-control-prev {
+            left: 0.25rem;
+        }
+
+        .cb .carousel-control-next {
+            right: 0.25rem;
+        }
+    }
 </style>
 {% endblock %}
+
 {% block body %}
 <div class="container my-4">
-    <button id="show-cart">Show Cart</button>
-<!--    <h2 id="cart-items">Cart Items.....</h2>-->
     {% for product_and_category in products_and_categories %}
-    <div id="cardCarousel_{{product_and_category.category|slugify }}" class="carousel slide cb" data-bs-ride="carousel">
-        <h2 class="text-center my-3">Patanjali - {{product_and_category.category|title}}</h2>
+    <div id="cardCarousel_{{ product_and_category.category|slugify }}" class="carousel slide cb" data-bs-ride="carousel">
+
+        <!-- Category Title -->
+        <h2 class="text-center my-3">
+            Patanjali - {{ product_and_category.category|title }}
+        </h2>
+
         <div class="carousel-inner">
             {% for product in product_and_category.products %}
                 {% if forloop.counter0|divisibleby:4 %}
@@ -133,33 +154,46 @@
 
                 <!-- Product Card -->
                 <div class="col-md-3">
-                    <div class="card h-100 shadow-sm">
-                        <!-- Fixed size image -->
-                        <div class="card-img-container">
-                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}">
-                        </div>
+  <div class="card h-100 shadow-sm">
+    <div class="card-img-container">
+      <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}">
+    </div>
 
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title text-truncate">{{ product.product_name }}</h5>
-                            <!-- Truncated description -->
-                            <p class="card-text text-truncate-3">
-                                {{ product.description }}
-                            </p>
-                            <div class="mt-auto">
-                                <div class="row g-2">
-                                    <div class="col-6">
-                                        <button class="btn btn-primary w-100 add-to-cart" data-product-name="{{product.product_name}}" >Add to Cart</button>
-                                    </div>
-                                    <div class="col-6">
-                                        <a href="{% url 'shop_product_detail' product.product_id %}">
-                                        <button class="btn btn-primary w-100" data-product-name="{{product.product_name}}" >Quick View</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <div class="card-body d-flex flex-column">
+      <h5 class="card-title text-truncate">{{ product.product_name }}</h5>
+      <p class="card-text text-truncate-3">{{ product.description }}</p>
+
+      <div class="mt-auto">
+        <div class="row g-2">
+          <!-- Add to Cart Button -->
+          <div class="col-12 text-center">
+            <button
+              class="btn btn-primary w-100 add-to-cart-btn"
+              data-product-id="{{ product.product_id }}"
+              data-product-name="{{ product.product_name }}">
+              Add to Cart
+            </button>
+
+            <!-- Hidden Quantity Controller -->
+            <div class="quantity-controller d-none mt-2">
+              <button class="btn btn-sm btn-outline-secondary minus-btn">-</button>
+              <span class="mx-2 quantity-value">1</span>
+              <button class="btn btn-sm btn-outline-secondary plus-btn">+</button>
+            </div>
+          </div>
+
+          <!-- Quick View Button -->
+          <div class="col-12 mt-2">
+            <a href="{% url 'shop_product_detail' product.product_id %}" class="btn btn-secondary w-100">
+              Quick View
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
                 {% if forloop.counter|divisibleby:4 or forloop.last %}
                             </div> <!-- End row -->
@@ -168,82 +202,135 @@
                 {% endif %}
             {% endfor %}
         </div>
-        <!-- Clean buttons: no inline styles anymore -->
-        <button
-          class="carousel-control-prev cb"
-          type="button"
-          data-bs-target="#cardCarousel_{{product_and_category.category|slugify }}"
-          data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev cb" type="button"
+                data-bs-target="#cardCarousel_{{ product_and_category.category|slugify }}"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
         </button>
 
-        <button
-          class="carousel-control-next cb"
-          type="button"
-          data-bs-target="#cardCarousel_{{product_and_category.category|slugify}}"
-          data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
+        <button class="carousel-control-next cb" type="button"
+                data-bs-target="#cardCarousel_{{ product_and_category.category|slugify }}"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
         </button>
     </div>
     {% endfor %}
 </div>
-
 {% endblock %}
+
 {% block js %}
 <script>
-    let cart = JSON.parse(localStorage.getItem('cart')) || {};
-    const updateCartCount = () => {
-        const totalItems = Object.keys(cart).length;
-        document.getElementById('cart-count').textContent = totalItems;
+  // ---------- 1. INITIAL CART SETUP ----------
+  let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+  // Save cart to local storage
+  function saveCart() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  // ---------- 2. UPDATE CART COUNT ----------
+  function updateCartCount() {
+    const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+  }
+
+  // ---------- 3. UPDATE CART POPOVER ----------
+  function updateCartPopover() {
+    const container = document.getElementById('cart-items');
+    let content = '<ul class="list-group list-group-flush">';
+
+    for (const [id, product] of Object.entries(cart)) {
+      content += `<li class="list-group-item">${product.name} : ${product.quantity}</li>`;
     }
+
+    content += '</ul>';
+
+    let popoverInstance = bootstrap.Popover.getInstance(container);
+
+    if (popoverInstance) {
+      popoverInstance.setContent({ '.popover-body': content });
+    } else {
+      new bootstrap.Popover(container, {
+        html: true,
+        allowHtml: true,
+        sanitize: false,
+        content: content,
+        title: 'Cart Items'
+      });
+    }
+  }
+
+  // ---------- 4. UPDATE PRODUCT UI ----------
+  function updateProductUI(productCard, productId) {
+    const addToCartBtn = productCard.querySelector('.add-to-cart-btn');
+    const quantityController = productCard.querySelector('.quantity-controller');
+    const quantityValue = productCard.querySelector('.quantity-value');
+
+    if (cart[productId]) {
+      addToCartBtn.classList.add('d-none');
+      quantityController.classList.remove('d-none');
+      quantityValue.textContent = cart[productId].quantity;
+    } else {
+      addToCartBtn.classList.remove('d-none');
+      quantityController.classList.add('d-none');
+    }
+  }
+
+  // ---------- 5. EVENT HANDLERS ----------
+  document.addEventListener('click', (e) => {
+    const productCard = e.target.closest('.card');
+    if (!productCard) return;
+
+    const productId = productCard.querySelector('.add-to-cart-btn').dataset.productId;
+    const productName = productCard.querySelector('.add-to-cart-btn').dataset.productName;
+
+    // Add to Cart
+    if (e.target.classList.contains('add-to-cart-btn')) {
+      cart[productId] = { name: productName, quantity: 1 };
+      saveCart();
+      updateProductUI(productCard, productId);
+      updateCartCount();
+      updateCartPopover();
+    }
+
+    // Plus Button
+    if (e.target.classList.contains('plus-btn')) {
+      cart[productId].quantity++;
+      saveCart();
+      updateProductUI(productCard, productId);
+      updateCartCount();
+      updateCartPopover();
+    }
+
+    // Minus Button
+    if (e.target.classList.contains('minus-btn')) {
+      if (cart[productId].quantity > 1) {
+        cart[productId].quantity--;
+      } else {
+        delete cart[productId];
+      }
+      saveCart();
+      updateProductUI(productCard, productId);
+      updateCartCount();
+      updateCartPopover();
+    }
+  });
+
+  // ---------- 6. INITIAL PAGE LOAD ----------
+  document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
-    const addToCart = (productName) => {
-        cart[productName] = (cart[productName] || 0) + 1;
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-    }
-    const updateCart = () => {
-        const container = document.getElementById('cart-items');
-        let content = '<ul class="list-group list-group-flush">';
+    updateCartPopover();
 
-        for (const [productName, productQuantity] of Object.entries(cart)) {
-            content += `<li class="list-group-item">${productName} : ${productQuantity}</li>`;
-        }
-
-        content += '</ul>';
-
-
-        // Get existing popover instance
-        let popoverInstance = bootstrap.Popover.getInstance(container);
-
-        if (popoverInstance) {
-            // If it exists, just update the body dynamically
-            popoverInstance.setContent({ '.popover-body': content });
-        } else {
-            // If not, create a new popover
-            popoverInstance = new bootstrap.Popover(container, {
-                html: true,       // legacy support
-                allowHtml: true,  // ✅ REQUIRED for Bootstrap 5.3+
-                sanitize: false,  // ✅ Disable sanitization to allow raw HTML
-                content: content, // explicitly set initial content
-                title: 'Cart Items'
-            });
-        }
-    };
-    updateCart();
-    document.addEventListener('click', (e) => {
-        if(e.target.classList.contains('add-to-cart')) {
-            const productName = e.target.dataset.productName;
-            addToCart(productName);
-            updateCart();
-        }
-        if(e.target.id === 'show-cart') {
-            updateCart();
-        }
-    })
-
-
+    // Restore UI for all product cards
+    document.querySelectorAll('.product-card').forEach(productCard => {
+      const productId = productCard.querySelector('.add-to-cart-btn').dataset.productId;
+      updateProductUI(productCard, productId);
+    });
+  });
 </script>
+
 {% endblock %}
