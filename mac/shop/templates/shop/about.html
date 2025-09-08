@@ -1,6 +1,98 @@
 {% extends 'shop/basic.html' %}
-{% block title %}About Page{% endblock %}
+{% block title %}About Us - Make in India E-commerce{% endblock %}
 {% block body %}
-<h1>About - Here</h1>
-<p>Our About Section</p>
+<body>
+   <div class="container my-5">
+      <div class="p-5 text-center bg-body-tertiary rounded-3">
+         <svg class="bi mt-4 mb-3" style="color: var(--bs-indigo);" width="100" height="100" aria-hidden="true">
+            <use xlink:href="#bootstrap"></use>
+         </svg>
+         <h1 class="text-body-emphasis">About Us</h1>
+         <p class="col-lg-8 mx-auto fs-5 text-muted">
+            Welcome to <strong>MakeInIndiaKart</strong>, your trusted online marketplace for authentic Indian products.
+            We are on a mission to empower local artisans, small businesses, and manufacturers by giving them
+            a platform to showcase their products to the world.
+            Our goal is to support the <em>Make in India</em> initiative and promote sustainable, locally made goods.
+         </p>
+      </div>
+   </div>
+
+   <div class="container my-5">
+      <div class="row">
+         <div class="col-md-6">
+            <h2>Our Vision</h2>
+            <p>
+               At MakeInIndiaKart, we envision a future where every household has easy access to high-quality,
+               affordable products that are proudly made in India. By connecting local manufacturers directly
+               to consumers, we eliminate middlemen and ensure fair pricing for both buyers and sellers.
+            </p>
+            <ul>
+               <li>Promote Indian-made products globally.</li>
+               <li>Support small-scale industries and artisans.</li>
+               <li>Encourage sustainable and eco-friendly practices.</li>
+               <li>Offer a seamless shopping experience to customers.</li>
+            </ul>
+         </div>
+
+         <div class="col-md-6">
+            <img src="/static/images/make-in-india.jpg" alt="Make in India Products" class="img-fluid rounded shadow">
+         </div>
+      </div>
+   </div>
+
+   <div class="container my-5">
+      <h2 class="text-center mb-4">Why Shop With Us?</h2>
+      <div class="row text-center">
+         <div class="col-md-4">
+            <svg class="bi mb-3" width="50" height="50" style="color: #0d6efd;" aria-hidden="true">
+               <use xlink:href="#check2-circle"></use>
+            </svg>
+            <h5>Authentic Products</h5>
+            <p>
+               Every product sold on our platform is verified for quality and authenticity.
+               Shop with confidence knowing you're supporting genuine Indian craftsmanship.
+            </p>
+         </div>
+         <div class="col-md-4">
+            <svg class="bi mb-3" width="50" height="50" style="color: #198754;" aria-hidden="true">
+               <use xlink:href="#check2-circle"></use>
+            </svg>
+            <h5>Fast & Reliable Delivery</h5>
+            <p>
+               With our trusted delivery partners, we ensure your products reach you quickly and safely,
+               no matter where you are in India.
+            </p>
+         </div>
+         <div class="col-md-4">
+            <svg class="bi mb-3" width="50" height="50" style="color: #fd7e14;" aria-hidden="true">
+               <use xlink:href="#check2-circle"></use>
+            </svg>
+            <h5>Secure Payments</h5>
+            <p>
+               Your transactions are 100% secure with multiple payment options, including UPI, wallets, cards, and cash on delivery.
+            </p>
+         </div>
+      </div>
+   </div>
+
+   <div class="container my-5 text-center">
+      <h2>Join the Make in India Movement</h2>
+      <p class="col-lg-8 mx-auto fs-5 text-muted">
+         Be a part of India's growth story by supporting local businesses.
+         Explore a wide range of products, from handloom fabrics to organic goods,
+         electronics, home decor, and more — all made by skilled Indian artisans and entrepreneurs.
+      </p>
+      <div class="d-inline-flex gap-2 mb-5">
+         <a href="/shop" class="btn btn-primary btn-lg px-4 rounded-pill">
+            Start Shopping
+            <svg class="bi ms-2" width="24" height="24" aria-hidden="true">
+               <use xlink:href="#arrow-right-short"></use>
+            </svg>
+         </a>
+         <a href="/contact" class="btn btn-outline-secondary btn-lg px-4 rounded-pill">
+            Contact Us
+         </a>
+      </div>
+   </div>
+</body>
 {% endblock %}

@@ -146,7 +146,16 @@
                                 {{ product.description }}
                             </p>
                             <div class="mt-auto">
-                                <button class="btn btn-primary w-100 add-to-cart" data-product-name="{{product.product_name}}" >Add to Cart</button>
+                                <div class="row g-2">
+                                    <div class="col-6">
+                                        <button class="btn btn-primary w-100 add-to-cart" data-product-name="{{product.product_name}}" >Add to Cart</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <a href="{% url 'shop_product_detail' product.product_id %}">
+                                        <button class="btn btn-primary w-100" data-product-name="{{product.product_name}}" >Quick View</button>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

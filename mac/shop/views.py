@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Product
 from math import ceil
 
@@ -41,7 +41,8 @@ def search_products(request):
 
 # Product Detail Page
 def product_detail(request, id):
-    return render(request, 'shop\product_view.html')
+    product = get_object_or_404(Product, pk=id)
+    return render(request, 'shop\product_view.html', {'product': product})
 
 # Checkout Page
 def checkout(request):

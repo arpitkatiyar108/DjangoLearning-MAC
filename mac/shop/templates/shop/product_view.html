@@ -1,6 +1,26 @@
 {% extends 'shop/basic.html' %}
 {% block title %}Product View Page{% endblock %}
 {% block body %}
-<h1>Product View - Here</h1>
-<p>Our Product View Section</p>
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-4">
+            <img class="img-fluid rounded" src="{{product.image.url}}" alt="{{product.product_name}}">
+        </div>
+        <div class="col-md-8">
+            <h2>{{product.product_name}}</h2>
+            <p class="text-muted">{{product.description}}</p>
+            <p><strong>₹{{product.price}}</strong></p>
+            <p>Available Quantity: 223</p>
+
+        <div class="mt-3">
+            <button class="btn btn-success me-2">Buy Now</button>
+            <button class="btn btn-primary">Add to Cart</button>
+        </div>
+            </div>
+    </div>
+</div>
+{% block js %}
+<script>
+</script>
+    {% endblock %}
 {% endblock %}
