@@ -21,6 +21,64 @@
 </div>
 {% block js %}
 <script>
+// ---------- 1. INITIAL CART SETUP ----------
+  let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+
+  // ---------- 2. UPDATE CART COUNT ----------
+  function updateCartCount() {
+    const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+    document.getElementById('cart-count').textContent = totalItems;
+  }
+
+  // ---------- 3. UPDATE CART POPOVER ----------
+  function updateCartPopover() {
+    const container = document.getElementById('cart-items');
+    let content = '<ol class="list-group list-group-flush numbered-list">';
+
+    for (const [id, product] of Object.entries(cart)) {
+      content += `<li class="list-group-item">${product.name} : ${product.quantity}</li>`;
+    }
+
+   content += `
+    </ol>
+    <div class="d-flex justify-content-center gap-2">
+        <a href="{% url 'shop_checkout' %}" class="btn btn-sm btn-primary">Checkout</a>
+        <button class="btn btn-sm btn-danger clear-cart">Clear Cart</button>
+    </div>
+`;
+
+    let popoverInstance = bootstrap.Popover.getInstance(container);
+
+    if (popoverInstance) {
+      popoverInstance.setContent({ '.popover-body': content });
+    } else {
+      new bootstrap.Popover(container, {
+        html: true,
+        allowHtml: true,
+        sanitize: false,
+        content: content,
+        title: 'Cart Items'
+      });
+    }
+  }
+
+
+  // ---------- 4. EVENT HANDLERS ----------
+  document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('clear-cart')) {
+        cart = {};
+        localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartCount();
+        updateCartPopover();
+    }
+  });
+
+  // ---------- 5. INITIAL PAGE LOAD ----------
+  document.addEventListener('DOMContentLoaded', () => {
+    updateCartCount();
+    updateCartPopover();
+  });
 </script>
     {% endblock %}
 {% endblock %}

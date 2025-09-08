@@ -6,6 +6,18 @@ Home Page
 
 {% block style %}
 <style>
+    /* Enable numbering on Bootstrap list-group */
+.numbered-list {
+  list-style-type: decimal !important;  /* Force decimal numbering */
+  padding-left: 1.5rem;                 /* Space for numbers */
+  counter-reset: list-counter;          /* Reset counter */
+}
+
+/* Fix each list item to behave like a list-item */
+.numbered-list .list-group-item {
+  display: list-item !important;        /* Allow numbering to appear */
+  list-style-type: decimal !important;  /* Show 1, 2, 3, etc. */
+}
     /* ---------- Product Card Styling ---------- */
     /* 1. Fix image size and maintain aspect ratio */
     .card-img-container {
@@ -154,7 +166,7 @@ Home Page
 
                 <!-- Product Card -->
                 <div class="col-md-3">
-  <div class="card h-100 shadow-sm">
+  <div class="card h-100 shadow-sm product-card">
     <div class="card-img-container">
       <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.product_name }}">
     </div>
@@ -241,13 +253,19 @@ Home Page
   // ---------- 3. UPDATE CART POPOVER ----------
   function updateCartPopover() {
     const container = document.getElementById('cart-items');
-    let content = '<ul class="list-group list-group-flush">';
+    let content = '<ol class="list-group list-group-flush numbered-list">';
 
     for (const [id, product] of Object.entries(cart)) {
       content += `<li class="list-group-item">${product.name} : ${product.quantity}</li>`;
     }
 
-    content += '</ul>';
+   content += `
+    </ol>
+    <div class="d-flex justify-content-center gap-2">
+        <a href="{% url 'shop_checkout' %}" class="btn btn-sm btn-primary">Checkout</a>
+        <button class="btn btn-sm btn-danger clear-cart">Clear Cart</button>
+    </div>
+`;
 
     let popoverInstance = bootstrap.Popover.getInstance(container);
 
@@ -282,8 +300,20 @@ Home Page
 
   // ---------- 5. EVENT HANDLERS ----------
   document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('clear-cart')) {
+        cart = {};
+        localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartCount();
+        updateCartPopover();
+        document.querySelectorAll('.product-card').forEach(productCard => {
+      const productId = productCard.querySelector('.add-to-cart-btn').dataset.productId;
+      updateProductUI(productCard, productId);
+    });
+    }
     const productCard = e.target.closest('.card');
     if (!productCard) return;
+
+
 
     const productId = productCard.querySelector('.add-to-cart-btn').dataset.productId;
     const productName = productCard.querySelector('.add-to-cart-btn').dataset.productName;
@@ -329,6 +359,7 @@ Home Page
     document.querySelectorAll('.product-card').forEach(productCard => {
       const productId = productCard.querySelector('.add-to-cart-btn').dataset.productId;
       updateProductUI(productCard, productId);
+
     });
   });
 </script>
