@@ -236,6 +236,8 @@ Home Page
 
 {% block js %}
 <script>
+    let popOverHtml = '<button type="button" id="cart-items" class="btn btn-md btn-danger mx-3" data-html="true" data-bs-toggle="popover" data-bs-title="" data-bs-content=" ">Cart [<span id="cart-count"></span>] </button>';
+    document.getElementById('cart-container').innerHTML = popOverHtml;
   // ---------- 1. INITIAL CART SETUP ----------
   let cart = JSON.parse(localStorage.getItem('cart')) || {};
 

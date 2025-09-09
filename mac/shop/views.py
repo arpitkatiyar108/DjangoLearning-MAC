@@ -57,3 +57,7 @@ def product_detail(request, id):
 # Checkout Page
 def checkout(request):
     return render(request, 'shop/checkout.html')
+
+# Place Order Page
+def place_order(request):
+    return render(request, 'shop/place_order.html')
